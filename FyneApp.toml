@@ -1,4 +1,5 @@
 [Details]
+  Icon = "Icon.png"
   Name = "Percentman"
   ID = "com.percentman.app"
   Version = "1.0.0"
