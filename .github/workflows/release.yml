@@ -61,9 +61,6 @@ jobs:
       - name: Install fyne-cross
         run: go install github.com/fyne-io/fyne-cross@latest
 
-      - name: Build for macOS (amd64)
-        run: fyne-cross darwin -arch=amd64 -app-id com.percentman.app
-
       - name: Build for macOS (arm64)
         run: fyne-cross darwin -arch=arm64 -app-id com.percentman.app
 
@@ -73,17 +70,15 @@ jobs:
       - name: Prepare macOS artifacts
         run: |
           mkdir -p release
-          for arch in amd64 arm64; do
-            create-dmg \
-              --volname "Percentman" \
-              --window-pos 200 120 \
-              --window-size 600 400 \
-              --icon-size 100 \
-              --icon "Percentman.app" 150 190 \
-              --app-drop-link 450 190 \
-              "release/percentman-macos-${arch}.dmg" \
-              "fyne-cross/dist/darwin-${arch}/Percentman.app"
-          done
+          create-dmg \
+            --volname "Percentman" \
+            --window-pos 200 120 \
+            --window-size 600 400 \
+            --icon-size 100 \
+            --icon "Percentman.app" 150 190 \
+            --app-drop-link 450 190 \
+            "release/percentman-macos-arm64.dmg" \
+            "fyne-cross/dist/darwin-arm64/Percentman.app"
           ls -la release/
 
       - name: Upload macOS artifacts
@@ -131,7 +126,6 @@ jobs:
           files: |
             release/percentman-windows-amd64.exe
             release/percentman-windows-arm64.exe
-            release/percentman-macos-amd64.dmg
             release/percentman-macos-arm64.dmg
           generate_release_notes: true
         env:
@@ -148,7 +142,6 @@ jobs:
           files: |
             release/percentman-windows-amd64.exe
             release/percentman-windows-arm64.exe
-            release/percentman-macos-amd64.dmg
             release/percentman-macos-arm64.dmg
           body: |
             This is an automated snapshot build from the main branch.
